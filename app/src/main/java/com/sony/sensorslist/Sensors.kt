@@ -11,7 +11,7 @@ class Sensors {
 
     fun getSensors(context: Context) : List<Sensor> {
         if (sensors == null) {
-            manager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+            manager = context.getSystemService(SensorManager::class.java)
             sensors = manager.getSensorList(Sensor.TYPE_ALL)
         }
         return sensors!!
