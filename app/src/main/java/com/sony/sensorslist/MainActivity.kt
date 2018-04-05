@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(),
     private val NOT_CHECKED: Int = -1
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        var indexChecked = getChecked()
+        val indexChecked = getChecked()
         if (indexChecked != NOT_CHECKED) {
             contentView.text = sensors.getSensorInfoAsString(indexChecked)
         }
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(),
                 fab.backgroundTintList = resources.getColorStateList(R.color.colorPrimary, null)
 
             } else {
-                var id = getChecked()
+                val id = getChecked()
                 if (id > NOT_CHECKED) {
                     sensors.listen(sensors.getSensor(id)!!, this)
                     listening = true
