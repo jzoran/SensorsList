@@ -15,7 +15,7 @@ class AboutActivity : AppCompatActivity() {
         title = resources.getText(R.string.action_about)
         aboutText.movementMethod = ScrollingMovementMethod()
 
-        val licenseText = resources.assets.open("LICENSE")
+        val licenseText = resources.assets.open("LICENSE.md")
                 .bufferedReader()
                 .use {
                     it.readText()

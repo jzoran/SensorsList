@@ -36,7 +36,7 @@ dependencies {
 }
 
 task copyFiles(type: Copy) {
-    from '../LICENSE'
+    from '../LICENSE.md'
     into 'src/main/assets/'
 }
 
