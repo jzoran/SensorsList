@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import android.widget.Toast
 import androidx.core.view.forEach
+import androidx.core.view.get
 
 const val NOT_CHECKED: Int = -1
 
@@ -109,7 +110,7 @@ class MainActivity : AppCompatActivity(),
         nav_view.menu.forEach {
             it.isChecked = false
         }
-        nav_view.menu.getItem(item.itemId).isChecked = true
+        nav_view.menu[item.itemId].isChecked = true
         contentView.text = sensors.getSensorInfoAsString(item.itemId)
         title = sensors.getSensorName(item.itemId)
         drawer_layout.closeDrawer(GravityCompat.START)
