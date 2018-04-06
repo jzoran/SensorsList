@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(),
             } else {
                 val id = getChecked()
                 if (id > NOT_CHECKED) {
-                    sensors.listen(sensors.getSensor(id)!!, this)
+                    sensors.listen(id, this)
                     listening = true
                     fab.setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_on, null))
                     fab.backgroundTintList = resources.getColorStateList(R.color.colorAccent, null)
@@ -71,9 +71,9 @@ class MainActivity : AppCompatActivity(),
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        sensors = Sensors()
-        for ((i, sensor) in sensors.getSensors(this).withIndex()) {
-            nav_view.menu.add(R.menu.activity_main_drawer, i, Menu.NONE, sensor.name)
+        sensors = Sensors(this)
+        for ((i, sensorName) in sensors.names.withIndex()) {
+            nav_view.menu.add(R.menu.activity_main_drawer, i, Menu.NONE, sensorName)
         }
         nav_view.setNavigationItemSelectedListener(this)
     }

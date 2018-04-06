@@ -6,22 +6,25 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 
 class Sensors {
-    private var sensors: List<Sensor>? = null
-    private lateinit var manager: SensorManager
+    private var sensors: List<Sensor> = emptyList()
+    private var manager: SensorManager
 
-    fun getSensors(context: Context) : List<Sensor> {
-        if (sensors == null) {
-            manager = context.getSystemService(SensorManager::class.java)
-            sensors = manager.getSensorList(Sensor.TYPE_ALL)
-        }
-        return sensors!!
+    constructor(context: Context) {
+        manager = context.getSystemService(SensorManager::class.java)
+        sensors = manager.getSensorList(Sensor.TYPE_ALL)
     }
 
-    fun getSensorInfoAsString(sel: Int) = sensors?.get(sel)?.info()
-    fun getSensorName(sel:Int) = sensors?.get(sel)?.name
-    fun getSensor(sel: Int) = sensors?.get(sel)
-    fun listen(sensor: Sensor, listener: SensorEventListener) =
-                manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_UI)
+    val names: List<String>
+        get() = sensors.map { sensor -> sensor.name  }
+
+    fun getSensorName(sel:Int): String = if (sel in 0..sensors.size) sensors[sel].name else ""
+    fun getSensorInfoAsString(sel: Int) = if (sel in 0..sensors.size) sensors[sel].info() else ""
+    fun listen(sel: Int, listener: SensorEventListener) =
+            if (sel in 0..sensors.size) {
+                manager.registerListener(listener, sensors[sel], SensorManager.SENSOR_DELAY_UI)
+            } else {
+                false
+            }
     fun stop(listener: SensorEventListener) = manager.unregisterListener(listener)
 }
 
