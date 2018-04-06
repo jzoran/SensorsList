@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import android.widget.Toast
 import androidx.core.view.forEach
 
+const val NOT_CHECKED: Int = -1
 
 class MainActivity : AppCompatActivity(),
         NavigationView.OnNavigationItemSelectedListener,
@@ -24,7 +25,6 @@ class MainActivity : AppCompatActivity(),
 
     private lateinit var sensors: Sensors
     private var listening: Boolean = false
-    private val NOT_CHECKED: Int = -1
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         val indexChecked = getChecked()
