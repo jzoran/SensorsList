@@ -105,7 +105,11 @@ class MainActivity : AppCompatActivity(),
         }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        sensors.stop(this)
+        if (listening) {
+            sensors.stop(this)
+            fab.performClick()
+            listening = false
+        }
         sensorValues.text = resources.getText(R.string.values_default)
         nav_view.menu.forEach {
             it.isChecked = false
