@@ -18,7 +18,7 @@ import android.widget.Toast
 import androidx.core.view.forEach
 import androidx.core.view.get
 
-const val NOT_CHECKED: Int = -1
+private const val MENU_ITEM_NOT_CHECKED: Int = -1
 
 class MainActivity : AppCompatActivity(),
         NavigationView.OnNavigationItemSelectedListener,
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         val indexChecked = getChecked()
-        if (indexChecked != NOT_CHECKED) {
+        if (indexChecked != MENU_ITEM_NOT_CHECKED) {
             contentView.text = sensors.getSensorInfoAsString(indexChecked)
         }
     }
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(),
 
             } else {
                 val id = getChecked()
-                if (id > NOT_CHECKED) {
+                if (id > MENU_ITEM_NOT_CHECKED) {
                     sensors.listen(id, this)
                     listening = true
                     fab.setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_on, null))
@@ -121,6 +121,6 @@ class MainActivity : AppCompatActivity(),
         nav_view.menu.forEach {
             if(it.isChecked) return it.itemId
         }
-        return -1
+        return MENU_ITEM_NOT_CHECKED
     }
 }
