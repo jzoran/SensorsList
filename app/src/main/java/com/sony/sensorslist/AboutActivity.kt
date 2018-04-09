@@ -6,6 +6,7 @@ import android.text.SpannableStringBuilder
 import android.text.method.ScrollingMovementMethod
 import androidx.core.text.bold
 import kotlinx.android.synthetic.main.activity_about.*
+import kotlinx.android.synthetic.main.activity_about.view.*
 
 class AboutActivity : AppCompatActivity() {
 
@@ -13,19 +14,19 @@ class AboutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
         title = resources.getText(R.string.action_about)
-        aboutText.movementMethod = ScrollingMovementMethod()
+
+        versionCard.textViewVersion.text = SpannableStringBuilder()
+                .bold { append(resources.getString(R.string.app_name)) }
+                .append("\n")
+                .append(BuildConfig.VERSION_NAME)
 
         val licenseText = resources.assets.open("LICENSE.md")
                 .bufferedReader()
                 .use {
                     it.readText()
                 }
-
-        aboutText.text = SpannableStringBuilder()
-                .bold { append(resources.getString(R.string.app_name)) }
-                .append("\n")
-                .append(BuildConfig.VERSION_NAME)
-                .append("\n\n")
+        licenseCard.textViewLicense.movementMethod = ScrollingMovementMethod()
+        licenseCard.textViewLicense.text = SpannableStringBuilder()
                 .bold { append(resources.getString(R.string.license_title)) }
                 .append("\n")
                 .append(licenseText)
