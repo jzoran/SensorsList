@@ -2,6 +2,7 @@ package com.sony.sensorslist
 
 import android.content.Context
 import android.hardware.Sensor
+import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 
@@ -41,3 +42,12 @@ fun Sensor.info(): String = "\nName: ${this.name}" +
         "\nDynamic: ${this.isDynamicSensor}" +
         "\nWakeUp: ${this.isWakeUpSensor}" +
         "\nAdditional Info: ${this.isAdditionalInfoSupported}"
+
+fun SensorEvent.getAccuracy() =
+        when(accuracy) {
+            0 -> "UNRELIABLE"
+            1 -> "LOW"
+            2 -> "MEDIUM"
+            3 -> "HIGH"
+            else -> "N/A"
+        }

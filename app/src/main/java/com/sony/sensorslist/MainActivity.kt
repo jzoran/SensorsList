@@ -35,11 +35,15 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-        var str = ""
-        event?.values?.forEach {
-            str += "\n$it"
+        if (event != null) {
+            var str = "accuracy: ${event.getAccuracy()}\n"
+            event.values?.forEach {
+                str += "\n$it"
+            }
+            sensorValues.text = str
+        } else {
+            sensorValues.text = resources.getString(R.string.values_unavailable)
         }
-        sensorValues.text = str
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -10,6 +10,7 @@
     <string name="action_about">About</string>
     <string name="item_default">Select the sensor on the left</string>
     <string name="values_default">Press button to listen or stop listening.</string>
+    <string name="values_unavailable">Event values not available.</string>
     <string name="text_about">App name and version</string>
     <string name="license_title">License:</string>
 </resources>
