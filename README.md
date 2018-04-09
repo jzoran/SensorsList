@@ -7,7 +7,7 @@ It's created very quickly for a specific need to test sensors all the while
 learning Kotlin.
 
 ## LICENSE
-The project is licensed under the license stated in the [LICENCE](LICENSE) file of this project.
+The project is licensed under the license stated in the [LICENCE.md](LICENSE.md) file of this project.
 
 ## Contributions
 As much as I'm surprised that you would want to contribute to this small project, you are more
