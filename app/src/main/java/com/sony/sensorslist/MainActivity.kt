@@ -54,16 +54,20 @@ class MainActivity : AppCompatActivity(),
             if (listening) {
                 listening = false
                 sensorValues.text = resources.getText(R.string.values_default)
-                fab.setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_off, null))
-                fab.backgroundTintList = resources.getColorStateList(R.color.colorPrimary, null)
+                fab.apply {
+                    setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_off, null))
+                    backgroundTintList = resources.getColorStateList(R.color.colorPrimary, null)
+                }
 
             } else {
                 val id = getChecked()
                 if (id != MENU_ITEM_NOT_CHECKED) {
                     sensors.listen(id, this)
                     listening = true
-                    fab.setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_on, null))
-                    fab.backgroundTintList = resources.getColorStateList(R.color.colorAccent, null)
+                    fab.apply {
+                        setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_on, null))
+                        backgroundTintList = resources.getColorStateList(R.color.colorAccent, null)
+                    }
                 }
             }
         }

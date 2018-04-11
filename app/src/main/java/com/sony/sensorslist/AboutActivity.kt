@@ -27,11 +27,13 @@ class AboutActivity : AppCompatActivity() {
                 .use {
                     it.readText()
                 }
-        licenseCard.textViewLicense.movementMethod = ScrollingMovementMethod()
-        licenseCard.textViewLicense.text = SpannableStringBuilder()
-                .bold { append(resources.getString(R.string.license_title)) }
-                .append("\n")
-                .append(licenseText)
-                .append("\n")
+        licenseCard.textViewLicense.apply {
+            movementMethod = ScrollingMovementMethod()
+            text = SpannableStringBuilder()
+                    .bold { append(resources.getString(R.string.license_title)) }
+                    .append("\n")
+                    .append(licenseText)
+                    .append("\n")
+        }
     }
 }
