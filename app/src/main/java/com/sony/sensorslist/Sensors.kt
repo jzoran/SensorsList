@@ -29,25 +29,41 @@ class Sensors {
     fun stop(listener: SensorEventListener) = manager.unregisterListener(listener)
 }
 
-fun Sensor.info(): String = "\nName: ${this.name}" +
-        "\nInt Type: ${this.type}" +
-        "\nString Type: ${this.stringType}" +
-        "\nVendor: ${this.vendor}" +
-        "\nVersion: ${this.version}" +
-        "\nResolution: ${this.resolution}" +
-        "\nPower: ${this.power}mAh" +
-        "\nMaximum Range: ${this.maximumRange}" +
-        "\nMinimum Delay: ${this.minDelay}" +
-        "\nMaximum Delay: ${this.maxDelay}" +
-        "\nDynamic: ${this.isDynamicSensor}" +
-        "\nWakeUp: ${this.isWakeUpSensor}" +
-        "\nAdditional Info: ${this.isAdditionalInfoSupported}"
+fun Sensor.info(): String = with(this) {
+    "\nName: $name" +
+    "\nId: $id" +
+    "\nInt Type: $type" +
+    "\nString Type: $stringType" +
+    "\nVendor: $vendor" +
+    "\nVersion: $version" +
+    "\nResolution: $resolution" +
+    "\nReporting mode: $stringReportingMode" +
+    "\nPower: ${power}mAh" +
+    "\nMaximum Range: $maximumRange" +
+    "\nMinimum Delay: $minDelay" +
+    "\nMaximum Delay: $maxDelay" +
+    "\nDynamic: $isDynamicSensor" +
+    "\nWakeUp: $isWakeUpSensor" +
+    "\nAdditional Info: $isAdditionalInfoSupported"
+}
 
-fun SensorEvent.getAccuracy() =
-        when(accuracy) {
-            0 -> "UNRELIABLE"
-            1 -> "LOW"
-            2 -> "MEDIUM"
-            3 -> "HIGH"
-            else -> "N/A"
-        }
+val Sensor.stringReportingMode: String
+    get() = when(reportingMode) {
+        0 -> "continuous"
+        1 -> "on change"
+        2 -> "one shot"
+        3 -> "special trigger"
+        else -> "n/a"
+    }
+
+val SensorEvent.stringAccuracy: String
+    get() = accuracyToString(accuracy)
+
+fun accuracyToString(accuracy: Int) = when(accuracy) {
+    -1 -> "<not connected>"
+    0 -> "unreliable"
+    1 -> "low"
+    2 -> "medium"
+    3 -> "high"
+    else -> "n/a"
+}

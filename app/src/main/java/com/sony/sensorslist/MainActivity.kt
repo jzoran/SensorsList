@@ -119,13 +119,15 @@ class MainActivity : AppCompatActivity(),
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         val indexChecked = getChecked()
         if (indexChecked != MENU_ITEM_NOT_CHECKED) {
-            contentView.text = sensors.getSensorInfoAsString(indexChecked)
+            val str = sensors.getSensorInfoAsString(indexChecked) +
+                    "\nAccuracy: ${accuracyToString(accuracy)}"
+            contentView.text = str
         }
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null) {
-            var str = "accuracy: ${event.getAccuracy()}\n"
+            var str = "accuracy: ${event.stringAccuracy}\n"
             event.values?.forEach {
                 str += "\n$it"
             }
