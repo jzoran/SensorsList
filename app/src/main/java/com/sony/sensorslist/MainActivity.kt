@@ -29,25 +29,6 @@ class MainActivity : AppCompatActivity(),
     private lateinit var sensors: Sensors
     private var listening: Boolean = false
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        val indexChecked = getChecked()
-        if (indexChecked != MENU_ITEM_NOT_CHECKED) {
-            contentView.text = sensors.getSensorInfoAsString(indexChecked)
-        }
-    }
-
-    override fun onSensorChanged(event: SensorEvent?) {
-        if (event != null) {
-            var str = "accuracy: ${event.getAccuracy()}\n"
-            event.values?.forEach {
-                str += "\n$it"
-            }
-            sensorValues.text = str
-        } else {
-            sensorValues.text = resources.getString(R.string.values_unavailable)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -129,6 +110,25 @@ class MainActivity : AppCompatActivity(),
         title = sensors.getSensorName(item.itemId)
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        val indexChecked = getChecked()
+        if (indexChecked != MENU_ITEM_NOT_CHECKED) {
+            contentView.text = sensors.getSensorInfoAsString(indexChecked)
+        }
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (event != null) {
+            var str = "accuracy: ${event.getAccuracy()}\n"
+            event.values?.forEach {
+                str += "\n$it"
+            }
+            sensorValues.text = str
+        } else {
+            sensorValues.text = resources.getString(R.string.values_unavailable)
+        }
     }
 
     private fun getChecked(): Int {
