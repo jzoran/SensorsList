@@ -118,7 +118,8 @@ class MainActivity : AppCompatActivity(),
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         val indexChecked = getChecked()
-        if (indexChecked != MENU_ITEM_NOT_CHECKED) {
+        if (indexChecked != MENU_ITEM_NOT_CHECKED &&
+                sensors.getSensorName(indexChecked) == sensor?.name) {
             val str = sensors.getSensorInfoAsString(indexChecked) +
                     "\nAccuracy: ${accuracyToString(accuracy)}"
             contentView.text = str
