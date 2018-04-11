@@ -1,10 +1,12 @@
 package com.sony.sensorslist
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.text.SpannableStringBuilder
 import android.text.method.ScrollingMovementMethod
+
 import androidx.core.text.bold
+
 import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.activity_about.view.*
 

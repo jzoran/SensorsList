@@ -11,12 +11,14 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+
+import androidx.core.view.forEach
+import androidx.core.view.get
+
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import android.widget.Toast
-import androidx.core.view.forEach
-import androidx.core.view.get
 
 private const val MENU_ITEM_NOT_CHECKED: Int = -1
 
