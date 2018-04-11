@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(),
 
             } else {
                 val id = getChecked()
-                if (id > MENU_ITEM_NOT_CHECKED) {
+                if (id != MENU_ITEM_NOT_CHECKED) {
                     sensors.listen(id, this)
                     listening = true
                     fab.setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_on, null))
