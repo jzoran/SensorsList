@@ -48,29 +48,7 @@ class MainActivity : AppCompatActivity(),
         }
         nav_view.setNavigationItemSelectedListener(this)
 
-
-        fab.setOnClickListener { _ ->
-            sensors.stop(this)
-            if (listening) {
-                listening = false
-                sensorValues.text = resources.getText(R.string.values_default)
-                fab.apply {
-                    setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_off, null))
-                    backgroundTintList = resources.getColorStateList(R.color.colorPrimary, null)
-                }
-
-            } else {
-                val id = getChecked()
-                if (id != MENU_ITEM_NOT_CHECKED) {
-                    sensors.listen(id, this)
-                    listening = true
-                    fab.apply {
-                        setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_on, null))
-                        backgroundTintList = resources.getColorStateList(R.color.colorAccent, null)
-                    }
-                }
-            }
-        }
+        fab.setOnClickListener { updateListening() }
     }
 
     override fun onBackPressed() {
@@ -101,9 +79,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (listening) {
-            sensors.stop(this)
-            fab.performClick()
-            listening = false
+            updateListening()
         }
         sensorValues.text = resources.getText(R.string.values_default)
         nav_view.menu.forEach {
@@ -143,5 +119,28 @@ class MainActivity : AppCompatActivity(),
             if(it.isChecked) return it.itemId
         }
         return MENU_ITEM_NOT_CHECKED
+    }
+
+    private fun updateListening() {
+        sensors.stop(this)
+        if (listening) {
+            listening = false
+            sensorValues.text = resources.getText(R.string.values_default)
+            fab.apply {
+                setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_off, null))
+                backgroundTintList = resources.getColorStateList(R.color.colorPrimary, null)
+            }
+
+        } else {
+            val id = getChecked()
+            if (id != MENU_ITEM_NOT_CHECKED) {
+                sensors.listen(id, this)
+                listening = true
+                fab.apply {
+                    setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_on, null))
+                    backgroundTintList = resources.getColorStateList(R.color.colorAccent, null)
+                }
+            }
+        }
     }
 }
