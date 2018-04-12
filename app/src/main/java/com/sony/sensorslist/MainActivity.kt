@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity(),
         if (indexChecked != MENU_ITEM_NOT_CHECKED &&
                 sensors.getSensorName(indexChecked) == sensor?.name) {
             val str = sensors.getSensorInfoAsString(indexChecked) +
-                    "\nAccuracy: ${accuracyToString(accuracy)}"
+                    "\nAccuracy: ${Sensors.accuracyToString(accuracy)}"
             contentView.text = str
         }
     }

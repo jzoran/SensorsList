@@ -18,6 +18,17 @@ class Sensors {
     val names: List<String>
         get() = sensors.map { sensor -> sensor.name  }
 
+    companion object {
+        fun accuracyToString(accuracy: Int) = when(accuracy) {
+            -1 -> "<not connected>"
+            0 -> "unreliable"
+            1 -> "low"
+            2 -> "medium"
+            3 -> "high"
+            else -> "n/a"
+        }
+    }
+
     fun getSensorName(sel:Int): String = if (sel in 0..sensors.size) sensors[sel].name else ""
     fun getSensorInfoAsString(sel: Int) = if (sel in 0..sensors.size) sensors[sel].info() else ""
     fun listen(sel: Int, listener: SensorEventListener) =
@@ -57,13 +68,4 @@ val Sensor.stringReportingMode: String
     }
 
 val SensorEvent.stringAccuracy: String
-    get() = accuracyToString(accuracy)
-
-fun accuracyToString(accuracy: Int) = when(accuracy) {
-    -1 -> "<not connected>"
-    0 -> "unreliable"
-    1 -> "low"
-    2 -> "medium"
-    3 -> "high"
-    else -> "n/a"
-}
+    get() = Sensors.accuracyToString(accuracy)
