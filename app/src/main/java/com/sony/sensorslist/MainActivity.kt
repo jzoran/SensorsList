@@ -21,6 +21,8 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 private const val MENU_ITEM_NOT_CHECKED: Int = -1
+private const val MENU_ITEM_CHECKED_ID = "itemId"
+private const val LISTENING_SENSOR = "listening"
 
 class MainActivity : AppCompatActivity(),
         NavigationView.OnNavigationItemSelectedListener,
@@ -48,7 +50,34 @@ class MainActivity : AppCompatActivity(),
         }
         nav_view.setNavigationItemSelectedListener(this)
 
-        fab.setOnClickListener { updateListening() }
+        fab.setOnClickListener {
+            if (listening) {
+                stopListenerUpdate()
+            } else {
+                val id = getChecked()
+                listenUpdate(id)
+            }
+        }
+
+        if (savedInstanceState != null) {
+            listening = savedInstanceState.getBoolean(LISTENING_SENSOR)
+            val itemId = savedInstanceState.getInt(MENU_ITEM_CHECKED_ID)
+            if (itemId != MENU_ITEM_NOT_CHECKED) {
+                selectMenuItem(itemId)
+                if (listening) {
+                    listenUpdate(itemId)
+                }
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+
+        outState?.run{
+            putInt(MENU_ITEM_CHECKED_ID, getChecked())
+            putBoolean(LISTENING_SENSOR, listening)
+        }
     }
 
     override fun onBackPressed() {
@@ -79,15 +108,13 @@ class MainActivity : AppCompatActivity(),
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (listening) {
-            updateListening()
+            stopListenerUpdate()
         }
         sensorValues.text = resources.getText(R.string.values_default)
         nav_view.menu.forEach {
             it.isChecked = false
         }
-        nav_view.menu[item.itemId].isChecked = true
-        contentView.text = sensors.getSensorInfoAsString(item.itemId)
-        title = sensors.getSensorName(item.itemId)
+        selectMenuItem(item.itemId)
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
@@ -121,26 +148,31 @@ class MainActivity : AppCompatActivity(),
         return MENU_ITEM_NOT_CHECKED
     }
 
-    private fun updateListening() {
-        sensors.stop(this)
-        if (listening) {
-            listening = false
-            sensorValues.text = resources.getText(R.string.values_default)
-            fab.run {
-                setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_off, null))
-                backgroundTintList = resources.getColorStateList(R.color.colorPrimary, null)
-            }
+    private fun selectMenuItem(itemId: Int) {
+        nav_view.menu[itemId].isChecked = true
+        contentView.text = sensors.getSensorInfoAsString(itemId)
+        title = sensors.getSensorName(itemId)
+    }
 
-        } else {
-            val id = getChecked()
-            if (id != MENU_ITEM_NOT_CHECKED) {
-                sensors.listen(id, this)
-                listening = true
-                fab.run {
-                    setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_on, null))
-                    backgroundTintList = resources.getColorStateList(R.color.colorAccent, null)
-                }
+    private fun listenUpdate(id: Int) {
+        if (id != MENU_ITEM_NOT_CHECKED) {
+            sensors.stop(this)
+            sensors.listen(id, this)
+            listening = true
+            fab.run {
+                setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_on, null))
+                backgroundTintList = resources.getColorStateList(R.color.colorAccent, null)
             }
+        }
+    }
+
+    private fun stopListenerUpdate() {
+        sensors.stop(this)
+        listening = false
+        sensorValues.text = resources.getText(R.string.values_default)
+        fab.run {
+            setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_off, null))
+            backgroundTintList = resources.getColorStateList(R.color.colorPrimary, null)
         }
     }
 }
