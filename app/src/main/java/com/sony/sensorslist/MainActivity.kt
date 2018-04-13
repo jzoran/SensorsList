@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity(),
         if (listening) {
             listening = false
             sensorValues.text = resources.getText(R.string.values_default)
-            fab.apply {
+            fab.run {
                 setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_off, null))
                 backgroundTintList = resources.getColorStateList(R.color.colorPrimary, null)
             }
@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity(),
             if (id != MENU_ITEM_NOT_CHECKED) {
                 sensors.listen(id, this)
                 listening = true
-                fab.apply {
+                fab.run {
                     setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_on, null))
                     backgroundTintList = resources.getColorStateList(R.color.colorAccent, null)
                 }

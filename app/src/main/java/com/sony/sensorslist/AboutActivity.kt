@@ -27,7 +27,7 @@ class AboutActivity : AppCompatActivity() {
                 .use {
                     it.readText()
                 }
-        licenseCard.textViewLicense.apply {
+        licenseCard.textViewLicense.run {
             movementMethod = ScrollingMovementMethod()
             text = SpannableStringBuilder()
                     .bold { append(resources.getString(R.string.license_title)) }
