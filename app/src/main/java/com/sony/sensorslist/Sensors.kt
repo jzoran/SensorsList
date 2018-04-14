@@ -5,13 +5,15 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.text.Spannable
 import android.text.SpannableStringBuilder
+import android.text.Spanned
 import android.text.style.SubscriptSpan
 import android.text.style.SuperscriptSpan
+
+import androidx.core.text.buildSpannedString
 import androidx.core.text.inSpans
 import androidx.core.text.scale
-import androidx.core.text.toSpannable
+import androidx.core.text.toSpanned
 
 class Sensors {
     private var sensors: List<Sensor> = emptyList()
@@ -77,211 +79,217 @@ val Sensor.stringReportingMode: String
 val SensorEvent.stringAccuracy: String
     get() = Sensors.accuracyToString(accuracy)
 
-val SensorEvent.valuesToString: Spannable
+val SensorEvent.valuesToString: Spanned
     get() = when(sensor.type) {
         Sensor.TYPE_ACCELEROMETER,
         Sensor.TYPE_GRAVITY,
         Sensor.TYPE_LINEAR_ACCELERATION -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                SpannableStringBuilder()
-                        .append("x: ${values[0]}m/s")
-                        .superscript { scale(0.75f) { append("2") } }
-                        .append("\ny: ${values[1]}m/s")
-                        .superscript { scale(0.75f) { append("2") } }
-                        .append("\nz: ${values[2]}m/s")
-                        .superscript { scale(0.75f) { append("2") } }
+                buildSpannedString {
+                    append("x: ${values[0]}m/s")
+                    superscript { scale(0.75f) { append("2") } }
+                    append("\ny: ${values[1]}m/s")
+                    superscript { scale(0.75f) { append("2") } }
+                    append("\nz: ${values[2]}m/s")
+                    superscript { scale(0.75f) { append("2") } }
+                }
             }
         }
         Sensor.TYPE_ACCELEROMETER_UNCALIBRATED -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                SpannableStringBuilder()
-                        .append("x: ${values[0]}m/s")
-                        .superscript { scale(0.75f) { append("2") } }
-                        .append("\ny: ${values[1]}m/s")
-                        .superscript { scale(0.75f) { append("2") } }
-                        .append("\nz: ${values[2]}m/s")
-                        .superscript { scale(0.75f) { append("2") } }
-                        .append("\nx")
-                        .subscript { scale(0.75f) { append("bias")} }
-                        .append(": ${values[3]}m/s")
-                        .superscript { scale(0.75f) { append("2") } }
-                        .append("\ny")
-                        .subscript { scale(0.75f) { append("bias")} }
-                        .append(": ${values[4]}m/s")
-                        .superscript { scale(0.75f) { append("2") } }
-                        .append("\nz")
-                        .subscript { scale(0.75f) { append("bias")} }
-                        .append(": ${values[5]}m/s")
-                        .superscript { scale(0.75f) { append("2") } }
+                buildSpannedString {
+                    append("x: ${values[0]}m/s")
+                    superscript { scale(0.75f) { append("2") } }
+                    append("\ny: ${values[1]}m/s")
+                    superscript { scale(0.75f) { append("2") } }
+                    append("\nz: ${values[2]}m/s")
+                    superscript { scale(0.75f) { append("2") } }
+                    append("\nx")
+                    subscript { scale(0.75f) { append("bias") } }
+                    append(": ${values[3]}m/s")
+                    superscript { scale(0.75f) { append("2") } }
+                    append("\ny")
+                    subscript { scale(0.75f) { append("bias") } }
+                    append(": ${values[4]}m/s")
+                    superscript { scale(0.75f) { append("2") } }
+                    append("\nz")
+                    subscript { scale(0.75f) { append("bias") } }
+                    append(": ${values[5]}m/s")
+                    superscript { scale(0.75f) { append("2") } }
+                }
             }
         }
         Sensor.TYPE_AMBIENT_TEMPERATURE -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                SpannableStringBuilder()
-                        .append("${values[0]}")
-                        .superscript { scale(0.75f) { append("o") } }
-                        .append("C")
+                buildSpannedString {
+                    append("${values[0]}")
+                    superscript { scale(0.75f) { append("o") } }
+                    append("C")
+                }
             }
         }
         Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR,
         Sensor.TYPE_ROTATION_VECTOR -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
                 var str = "x*sin(\u03B8/2):${values[0]}\n"
                 str += "y*sin(\u03B8/2):${values[1]}\n"
                 str += "z*sin(\u03B8/2):${values[2]}\n"
                 str += "cos(\u03B8/2):${values[3]}\n"
                 str += "accuracy: ${values[4]}rad"
-                str.toSpannable()
+                str.toSpanned()
             }
         }
         Sensor.TYPE_GAME_ROTATION_VECTOR -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
                 var str = "x*sin(\u03B8/2):${values[0]}\n"
                 str += "y*sin(\u03B8/2):${values[1]}\n"
                 str += "z*sin(\u03B8/2):${values[2]}\n"
                 str += "cos(\u03B8/2):${values[3]}\n"
-                str.toSpannable()
+                str.toSpanned()
             }
         }
         Sensor.TYPE_GYROSCOPE -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                SpannableStringBuilder()
-                        .append("x: ${values[0]}rad/s")
-                        .append("\ny: ${values[1]}rad/s")
-                        .append("\nz: ${values[2]}rad/s")
+                var str = "x: ${values[0]}rad/s"
+                str += "\ny: ${values[1]}rad/s"
+                str += "\nz: ${values[2]}rad/s"
+                str.toSpanned()
             }
         }
         Sensor.TYPE_GYROSCOPE_UNCALIBRATED -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                SpannableStringBuilder()
-                        .append("x: ${values[0]}rad/s")
-                        .append("\ny: ${values[1]}rad/s")
-                        .append("\nz: ${values[2]}rad/s")
-                        .append("\nx")
-                        .subscript { scale(0.75f) { append("ed") } }
-                        .append(": ${values[3]}rad/s")
-                        .append("\ny")
-                        .subscript { scale(0.75f) { append("ed") } }
-                        .append(": ${values[4]}rad/s")
-                        .append("\nz")
-                        .subscript { scale(0.75f) { append("ed") } }
-                        .append(": ${values[5]}rad/s")
+                buildSpannedString {
+                    append("x: ${values[0]}rad/s")
+                    append("\ny: ${values[1]}rad/s")
+                    append("\nz: ${values[2]}rad/s")
+                    append("\nx")
+                    subscript { scale(0.75f) { append("ed") } }
+                    append(": ${values[3]}rad/s")
+                    append("\ny")
+                    subscript { scale(0.75f) { append("ed") } }
+                    append(": ${values[4]}rad/s")
+                    append("\nz")
+                    subscript { scale(0.75f) { append("ed") } }
+                    append(": ${values[5]}rad/s")
+                }
             }
         }
         Sensor.TYPE_HEART_BEAT -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                "confidence [0.0 - 1.0]: ${values[0]}".toSpannable()
+                "confidence [0.0 - 1.0]: ${values[0]}".toSpanned()
             }
         }
         Sensor.TYPE_LIGHT -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                "${values[0]}lux".toSpannable()
+                "${values[0]}lux".toSpanned()
             }
         }
         Sensor.TYPE_LOW_LATENCY_OFFBODY_DETECT -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                "[0.0 | 1.0]: ${values[0]}".toSpannable()
+                "[0.0 | 1.0]: ${values[0]}".toSpanned()
             }
         }
         Sensor.TYPE_MAGNETIC_FIELD -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                SpannableStringBuilder()
-                        .append("x: ${values[0]}\u00B5T")
-                        .append("\ny: ${values[1]}\u00B5T")
-                        .append("\nz: ${values[2]}\u00B5T")
+                buildSpannedString {
+                    append("x: ${values[0]}\u00B5T")
+                    append("\ny: ${values[1]}\u00B5T")
+                    append("\nz: ${values[2]}\u00B5T")
+                }
             }
         }
         Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                SpannableStringBuilder()
-                        .append("x: ${values[0]}\u00B5T")
-                        .append("\ny: ${values[1]}\u00B5T")
-                        .append("\nz: ${values[2]}\u00B5T")
-                        .append("\nx")
-                        .subscript{ scale(0.75f) { append("b") } }
-                        .append(": ${values[3]}\u00B5T")
-                        .append("\ny")
-                        .subscript{ scale(0.75f) { append("b") } }
-                        .append(": ${values[4]}\u00B5T")
-                        .append("\nz")
-                        .subscript{ scale(0.75f) { append("b") } }
-                        .append(": ${values[5]}\u00B5T")
+                buildSpannedString {
+                    append("x: ${values[0]}\u00B5T")
+                    append("\ny: ${values[1]}\u00B5T")
+                    append("\nz: ${values[2]}\u00B5T")
+                    append("\nx")
+                    subscript { scale(0.75f) { append("b") } }
+                    append(": ${values[3]}\u00B5T")
+                    append("\ny")
+                    subscript { scale(0.75f) { append("b") } }
+                    append(": ${values[4]}\u00B5T")
+                    append("\nz")
+                    subscript { scale(0.75f) { append("b") } }
+                    append(": ${values[5]}\u00B5T")
+                }
             }
         }
         Sensor.TYPE_MOTION_DETECT -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                "${values[0]}".toSpannable()
+                "${values[0]}".toSpanned()
             }
         }
         Sensor.TYPE_ORIENTATION -> {
             var str = "deprecated:\n"
             values?.forEach { str += "$it\n" }
-            str.toSpannable()
+            str.toSpanned()
         }
         Sensor.TYPE_POSE_6DOF -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
                 var str = "(${values[0]}, ${values[1]}, ${values[2]},  ${values[3]}\n" +
                         "${values[4]}, ${values[5]}, ${values[6]}\n" +
                         "${values[7]}, ${values[8]}, ${values[9]},  ${values[10]}\n" +
                         "${values[11]}, ${values[12]}, ${values[13]}\n" +
                         "${values[14]})"
-                str.toSpannable()
+                str.toSpanned()
             }
         }
         Sensor.TYPE_PRESSURE -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                "${values[0]}hPa".toSpannable()
+                "${values[0]}hPa".toSpanned()
             }
         }
         Sensor.TYPE_PROXIMITY -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                "${values[0]}cm".toSpannable()
+                "${values[0]}cm".toSpanned()
             }
         }
         Sensor.TYPE_RELATIVE_HUMIDITY -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                "${values[0]}%".toSpannable()
+                "${values[0]}%".toSpanned()
             }
         }
         Sensor.TYPE_STATIONARY_DETECT -> {
             if (values == null) {
-                "n/a".toSpannable()
+                "n/a".toSpanned()
             } else {
-                "[1.0] ${values[0]}".toSpannable()
+                "[1.0] ${values[0]}".toSpanned()
             }
         }
         Sensor.TYPE_HEART_RATE,
@@ -289,9 +297,9 @@ val SensorEvent.valuesToString: Spannable
         Sensor.TYPE_SIGNIFICANT_MOTION -> {
                 var str = ""
                 values?.forEach { str += "$it\n" }
-                str.toSpannable()
+                str.toSpanned()
             }
-        else -> SpannableStringBuilder().append("n/a")
+        else -> "n/a".toSpanned()
     }
 
 inline fun SpannableStringBuilder.superscript(builderAction: SpannableStringBuilder.() -> Unit) =

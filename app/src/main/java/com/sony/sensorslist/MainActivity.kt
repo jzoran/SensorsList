@@ -9,10 +9,10 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.text.SpannableStringBuilder
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.text.buildSpannedString
 
 import androidx.core.view.forEach
 import androidx.core.view.get
@@ -133,9 +133,10 @@ class MainActivity : AppCompatActivity(),
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null) {
             var str = "accuracy: ${event.stringAccuracy}\n"
-            sensorValues.text =  SpannableStringBuilder()
-                    .append(str)
-                    .append(event.valuesToString)
+            sensorValues.text =  buildSpannedString {
+                append(str)
+                append(event.valuesToString)
+            }
         } else {
             sensorValues.text = resources.getString(R.string.values_unavailable)
         }
