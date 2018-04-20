@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">SensorsList</string>
-    <string name="view_title">Sensor:</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Sensors</string>
