@@ -25,10 +25,10 @@ class Sensors {
     }
 
     val names: List<String>
-        get() = sensors.map { sensor -> sensor.name  }
+        get() = sensors.map { sensor -> sensor.name }
 
     companion object {
-        fun accuracyToString(accuracy: Int) = when(accuracy) {
+        fun accuracyToString(accuracy: Int) = when (accuracy) {
             -1 -> "<not connected>"
             0 -> "unreliable"
             1 -> "low"
@@ -38,7 +38,7 @@ class Sensors {
         }
     }
 
-    fun getSensorName(sel:Int): String = if (sel in 0..sensors.size) sensors[sel].name else ""
+    fun getSensorName(sel: Int): String = if (sel in 0..sensors.size) sensors[sel].name else ""
     fun getSensorInfoAsString(sel: Int) = if (sel in 0..sensors.size) sensors[sel].info() else ""
     fun listen(sel: Int, listener: SensorEventListener) =
             if (sel in 0..sensors.size) {
@@ -67,12 +67,11 @@ fun Sensor.info(): String = with(this) {
     "\nAdditional Info: $isAdditionalInfoSupported" +
             if (isDeprecated) {
                 "\nSENSOR API DEPRECATED"
-            } else {""}
-
+            } else { "" }
 }
 
 val Sensor.stringReportingMode: String
-    get() = when(reportingMode) {
+    get() = when (reportingMode) {
         0 -> "continuous"
         1 -> "on change"
         2 -> "one shot"
@@ -85,8 +84,8 @@ val SensorEvent.stringAccuracy: String
 
 val SensorEvent.valuesToString: Spanned
     get() = if (values == null) {
-        "n/a".toSpanned() }
-    else when(sensor.type) {
+        "n/a".toSpanned()
+    } else when (sensor.type) {
             Sensor.TYPE_ACCELEROMETER,
             Sensor.TYPE_GRAVITY,
             Sensor.TYPE_LINEAR_ACCELERATION -> {
@@ -131,21 +130,21 @@ val SensorEvent.valuesToString: Spanned
             Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR,
             Sensor.TYPE_ROTATION_VECTOR -> {
                 ("x*sin(\u03B8/2):${values[0]}\n" +
-                 "y*sin(\u03B8/2):${values[1]}\n" +
-                 "z*sin(\u03B8/2):${values[2]}\n" +
-                 "cos(\u03B8/2):${values[3]}\n" +
-                 "accuracy: ${values[4]}rad").toSpanned()
+                    "y*sin(\u03B8/2):${values[1]}\n" +
+                    "z*sin(\u03B8/2):${values[2]}\n" +
+                    "cos(\u03B8/2):${values[3]}\n" +
+                    "accuracy: ${values[4]}rad").toSpanned()
             }
             Sensor.TYPE_GAME_ROTATION_VECTOR -> {
                 ("x*sin(\u03B8/2):${values[0]}\n" +
-                 "y*sin(\u03B8/2):${values[1]}\n" +
-                 "z*sin(\u03B8/2):${values[2]}\n" +
-                 "cos(\u03B8/2):${values[3]}\n").toSpanned()
+                    "y*sin(\u03B8/2):${values[1]}\n" +
+                    "z*sin(\u03B8/2):${values[2]}\n" +
+                    "cos(\u03B8/2):${values[3]}\n").toSpanned()
             }
             Sensor.TYPE_GYROSCOPE -> {
                 ("x: ${values[0]}rad/s" +
-                 "\ny: ${values[1]}rad/s" +
-                 "\nz: ${values[2]}rad/s").toSpanned()
+                    "\ny: ${values[1]}rad/s" +
+                    "\nz: ${values[2]}rad/s").toSpanned()
             }
             Sensor.TYPE_GYROSCOPE_UNCALIBRATED -> {
                 buildSpannedString {

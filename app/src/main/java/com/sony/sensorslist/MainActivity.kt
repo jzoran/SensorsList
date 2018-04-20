@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(),
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
-        outState?.run{
+        outState?.run {
             putInt(MENU_ITEM_CHECKED_ID, getChecked())
             putBoolean(LISTENING_SENSOR, listening)
         }
@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity(),
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null) {
             var str = "accuracy: ${event.stringAccuracy}\n"
-            sensorValues.text =  buildSpannedString {
+            sensorValues.text = buildSpannedString {
                 append(str)
                 append(event.valuesToString)
             }
@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity(),
 
     private fun getChecked(): Int {
         nav_view.menu.forEach {
-            if(it.isChecked) return it.itemId
+            if (it.isChecked) return it.itemId
         }
         return MENU_ITEM_NOT_CHECKED
     }
