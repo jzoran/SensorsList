@@ -10,6 +10,7 @@ import android.text.Spanned
 import android.text.style.SubscriptSpan
 import android.text.style.SuperscriptSpan
 
+import androidx.core.content.systemService
 import androidx.core.text.buildSpannedString
 import androidx.core.text.inSpans
 import androidx.core.text.scale
@@ -20,7 +21,7 @@ class Sensors {
     private var manager: SensorManager
 
     constructor(context: Context) {
-        manager = context.getSystemService(SensorManager::class.java)
+        manager = context.systemService()
         sensors = manager.getSensorList(Sensor.TYPE_ALL)
     }
 

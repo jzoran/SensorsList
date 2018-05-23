@@ -1,9 +1,9 @@
 package com.sony.sensorslist
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.text.method.ScrollingMovementMethod
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 
