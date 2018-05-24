@@ -8,8 +8,8 @@ android {
     compileSdkVersion 'android-P'
     defaultConfig {
         applicationId "com.sony.sensorslist"
-        minSdkVersion 23
-        //// this issues a warning that minSdkVersion(23) is
+        minSdkVersion 24
+        //// this issues a warning that minSdkVersion(24) is
         //// greater than targetSdkVersion(1)?!? So, 'P' is 1!
         // targetSdkVersion 'P'
         versionCode 1
