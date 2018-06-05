@@ -5,15 +5,13 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.text.SpannableStringBuilder
 import android.text.Spanned
-import android.text.style.SubscriptSpan
-import android.text.style.SuperscriptSpan
 
 import androidx.core.content.systemService
 import androidx.core.text.buildSpannedString
-import androidx.core.text.inSpans
 import androidx.core.text.scale
+import androidx.core.text.subscript
+import androidx.core.text.superscript
 import androidx.core.text.toSpanned
 
 class Sensors {
@@ -235,9 +233,3 @@ val SensorEvent.valuesToString: Spanned
 
 val Sensor.isDeprecated: Boolean
     get() = type == Sensor.TYPE_ORIENTATION
-
-inline fun SpannableStringBuilder.superscript(builderAction: SpannableStringBuilder.() -> Unit) =
-        inSpans(SuperscriptSpan(), builderAction = builderAction)
-
-inline fun SpannableStringBuilder.subscript(builderAction: SpannableStringBuilder.() -> Unit) =
-        inSpans(SubscriptSpan(), builderAction = builderAction)
