@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null) {
-            var str = "accuracy: ${event.stringAccuracy}\n"
+            val str = "accuracy: ${event.stringAccuracy}\n"
             sensorValues.text = buildSpannedString {
                 append(str)
                 append(event.valuesToString)
