@@ -38,7 +38,7 @@ class Sensors {
     }
 
     fun getSensorName(sel: Int): String = if (sel in 0..sensors.size) sensors[sel].name else ""
-    fun getSensorInfoAsString(sel: Int) = if (sel in 0..sensors.size) sensors[sel].info() else ""
+    fun getSensorInfoAsString(sel: Int) = if (sel in 0..sensors.size) sensors[sel].info else ""
     fun listen(sel: Int, listener: SensorEventListener) =
             if (sel in 0..sensors.size) {
                 manager.registerListener(listener, sensors[sel], SensorManager.SENSOR_DELAY_UI)
@@ -48,26 +48,27 @@ class Sensors {
     fun stop(listener: SensorEventListener) = manager.unregisterListener(listener)
 }
 
-fun Sensor.info(): String = with(this) {
-    "\nName: $name" +
-    "\nId: $id" +
-    "\nInt Type: $type" +
-    "\nString Type: $stringType" +
-    "\nVendor: $vendor" +
-    "\nVersion: $version" +
-    "\nResolution: $resolution" +
-    "\nReporting mode: $stringReportingMode" +
-    "\nPower: ${power}mAh" +
-    "\nMaximum Range: $maximumRange" +
-    "\nMinimum Delay: $minDelay" +
-    "\nMaximum Delay: $maxDelay" +
-    "\nDynamic: $isDynamicSensor" +
-    "\nWakeUp: $isWakeUpSensor" +
-    "\nAdditional Info: $isAdditionalInfoSupported" +
-            if (isDeprecated) {
-                "\nSENSOR API DEPRECATED"
-            } else { "" }
-}
+val Sensor.info: String
+    get() = with(this) {
+        "\nName: $name" +
+        "\nId: $id" +
+        "\nInt Type: $type" +
+        "\nString Type: $stringType" +
+        "\nVendor: $vendor" +
+        "\nVersion: $version" +
+        "\nResolution: $resolution" +
+        "\nReporting mode: $stringReportingMode" +
+        "\nPower: ${power}mAh" +
+        "\nMaximum Range: $maximumRange" +
+        "\nMinimum Delay: $minDelay" +
+        "\nMaximum Delay: $maxDelay" +
+        "\nDynamic: $isDynamicSensor" +
+        "\nWakeUp: $isWakeUpSensor" +
+        "\nAdditional Info: $isAdditionalInfoSupported" +
+                if (isDeprecated) {
+                    "\nSENSOR API DEPRECATED"
+                } else { "" }
+    }
 
 val Sensor.stringReportingMode: String
     get() = when (reportingMode) {
