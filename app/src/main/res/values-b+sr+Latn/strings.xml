@@ -1,0 +1,51 @@
+<resources>
+    <string name="action_about">O aplikaciji</string>
+    <string name="action_oss">Licence Otvorenog Koda</string>
+    <string name="action_settings">Postavke</string>
+    <string name="app_name">Senzori</string>
+    <string name="item_default">Izaberi senzor levo.</string>
+    <string name="license_title">Licenca:</string>
+    <string name="navigation_drawer_open">Otvori navigaciju</string>
+    <string name="navigation_drawer_close">Zatvori navigaciju</string>
+    <string name="nav_header_title">Senzori</string>
+    <string name="nav_header_subtitle">Lista dostupnih senzora</string>
+    <string name="nav_header_desc">Zaglavlje navigacije</string>
+    <string name="not_applicable">nije primenljivo</string>
+    <string name="sensor_accuracy">Tačnost</string>
+    <string name="sensor_additional_info">Dodatne informacije</string>
+    <string name="sensor_confidence">Nivo poverenja</string>
+    <string name="sensor_delay_min">Minimalno kašnjenje</string>
+    <string name="sensor_delay_max">Maksimalno kašnjenje</string>
+    <string name="sensor_deprecated">API ZASTAREO</string>
+    <string name="sensor_dynamic">Dinamičan</string>
+    <string name="sensor_id">Identifikator</string>
+    <string name="sensor_name">Ime</string>
+    <string name="sensor_power">Struja</string>
+    <string name="sensor_range">Maksimalan domet</string>
+    <string name="sensor_reporting_mode">Režim raportiranja</string>
+    <string name="sensor_resolution">Rezolucija</string>
+    <string name="sensor_type_int">Tip (indeks)</string>
+    <string name="sensor_type_str">Tip (ime)</string>
+    <string name="sensor_vendor">Proizvođač</string>
+    <string name="sensor_version">Verzija</string>
+    <string name="sensor_wakeup">Buđenje uređaja</string>
+    <string name="values_default">Pritisni dugme za praćenje ili prestanak praćenja senzora.</string>
+    <string name="values_unavailable">Vrednosti nisu dostupne.</string>
+    <string name="version_default">Verzija aplikacije</string>
+    <string name="values_true">da</string>
+    <string name="values_false">ne</string>
+
+    <string-array name="accuracy">
+        <item>senzor nije povezan</item>
+        <item>nedostupna</item>
+        <item>niska</item>
+        <item>srednja</item>
+        <item>visoka</item>
+    </string-array>
+    <string-array name="reportingMode">
+        <item>kontinualni</item>
+        <item>prilikom promene</item>
+        <item>samo jednom</item>
+        <item>specijalno aktiviranje</item>
+    </string-array>
+</resources>
