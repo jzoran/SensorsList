@@ -11,7 +11,6 @@ import android.widget.Toast
 
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.buildSpannedString
 import androidx.core.view.forEach
 import androidx.core.view.get
 import androidx.core.view.GravityCompat
@@ -126,18 +125,15 @@ class MainActivity : AppCompatActivity(),
         if (indexChecked != MENU_ITEM_NOT_CHECKED &&
                 sensors.getSensorName(indexChecked) == sensor?.name) {
             val str = sensors.getSensorInfoAsString(indexChecked) +
-                    "\nAccuracy: ${Sensors.accuracyToString(accuracy)}"
+                    "\n" + resources.getString(R.string.sensor_accuracy).capitalize() +
+                    ": ${stringAccuracy(this, accuracy)}"
             contentView.text = str
         }
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null) {
-            val str = "accuracy: ${event.stringAccuracy}\n"
-            sensorValues.text = buildSpannedString {
-                append(str)
-                append(event.valuesToString)
-            }
+            sensorValues.text = event.stringValues(this)
         } else {
             sensorValues.text = resources.getString(R.string.values_unavailable)
         }
