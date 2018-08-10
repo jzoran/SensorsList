@@ -6,23 +6,16 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 
-import androidx.core.content.systemService
 import androidx.core.text.buildSpannedString
 import androidx.core.text.scale
 import androidx.core.text.subscript
 import androidx.core.text.superscript
 import androidx.core.text.toSpanned
 
-class Sensors {
-    private var context: Context
-    private var manager: SensorManager
-    private var sensors: List<Sensor> = emptyList()
-
-    constructor(ctx: Context) {
-        context = ctx.applicationContext
-        manager = ctx.systemService()
-        sensors = manager.getSensorList(Sensor.TYPE_ALL)
-    }
+class Sensors(ctx: Context) {
+    private var context = ctx.applicationContext
+    private var manager: SensorManager = context.getSystemService(SensorManager::class.java)
+    private var sensors: List<Sensor> = manager.getSensorList(Sensor.TYPE_ALL)
 
     val names: List<String>
         get() = sensors.map { sensor -> sensor.name }
