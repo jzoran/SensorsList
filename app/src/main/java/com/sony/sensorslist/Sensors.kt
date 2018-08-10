@@ -49,7 +49,7 @@ fun Sensor.info(ctx: Context) = with(this) {
         "\n" + ctx.resources.getString(R.string.sensor_delay_min) + ": $minDelay" +
         "\n" + ctx.resources.getString(R.string.sensor_delay_max) + ": $maxDelay" +
         "\n" + ctx.resources.getString(R.string.sensor_dynamic) + ": " +
-                if(isDynamicSensor) ctx.resources.getString(R.string.values_true) else ctx.resources.getString(R.string.values_false) +
+                if (isDynamicSensor) ctx.resources.getString(R.string.values_true) else ctx.resources.getString(R.string.values_false) +
         "\n" + ctx.resources.getString(R.string.sensor_wakeup) + ": " +
                 if (isWakeUpSensor) ctx.resources.getString(R.string.values_true) else ctx.resources.getString(R.string.values_false) +
         "\n" + ctx.resources.getString(R.string.sensor_additional_info) + ": " +

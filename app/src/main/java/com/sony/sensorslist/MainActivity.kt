@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         setSupportActionBar(toolbar)
 
         val toggle = ActionBarDrawerToggle(this,
@@ -74,7 +75,6 @@ class MainActivity : AppCompatActivity(),
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-
         outState?.run {
             putInt(MENU_ITEM_CHECKED_ID, getChecked())
             putBoolean(LISTENING_SENSOR, listening)
@@ -153,14 +153,14 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun listenUpdate(id: Int) {
-        if (id != MENU_ITEM_NOT_CHECKED) {
-            sensors.stop(this)
-            sensors.listen(id, this)
-            listening = true
-            fab.run {
-                setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_on, null))
-                backgroundTintList = resources.getColorStateList(R.color.colorAccent, null)
-            }
+        if (id == MENU_ITEM_NOT_CHECKED) return
+
+        sensors.stop(this)
+        sensors.listen(id, this)
+        listening = true
+        fab.run {
+            setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_on, null))
+            backgroundTintList = resources.getColorStateList(R.color.colorAccent, null)
         }
     }
 
