@@ -10,4 +10,8 @@
         android:id="@+id/action_about"
         android:orderInCategory="101"
         android:title="@string/action_about" />
+    <item
+        android:id="@+id/action_oss"
+        android:orderInCategory="102"
+        android:title="@string/action_oss" />
 </menu>

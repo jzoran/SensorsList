@@ -15,6 +15,7 @@ import androidx.core.view.forEach
 import androidx.core.view.get
 import androidx.core.view.GravityCompat
 
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.google.android.material.navigation.NavigationView
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -101,6 +102,11 @@ class MainActivity : AppCompatActivity(),
             }
             R.id.action_about -> {
                 startActivity(Intent(this, AboutActivity::class.java))
+                true
+            }
+            R.id.action_oss -> {
+                startActivity(Intent(this, OssLicensesMenuActivity::class.java))
+                OssLicensesMenuActivity.setActivityTitle(getString(R.string.action_oss))
                 true
             }
             else -> super.onOptionsItemSelected(item)
