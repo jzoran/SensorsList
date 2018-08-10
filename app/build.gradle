@@ -5,13 +5,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 'android-P'
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.sony.sensorslist"
         minSdkVersion 24
-        //// this issues a warning that minSdkVersion(24) is
-        //// greater than targetSdkVersion(1)?!? So, 'P' is 1!
-        // targetSdkVersion 'P'
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
