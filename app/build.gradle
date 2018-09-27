@@ -58,7 +58,7 @@ tasks.register("ktlint", JavaExec) {
     // "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
     // see https://github.com/shyiko/ktlint#usage for more
 }
-check.dependsOn ktlint
+check.dependsOn(ktlint)
 
 tasks.register("ktlintFormat", JavaExec) {
     group = "formatting"
