@@ -41,14 +41,15 @@ dependencies {
     ktlint "com.github.shyiko:ktlint:0.28.0"
 }
 
-task copyFiles(type: Copy) {
+tasks.register("copyFiles", Copy) {
     from '../LICENSE.md'
     into 'src/main/assets/'
 }
 
 preBuild.dependsOn(copyFiles)
 
-task ktlint(type: JavaExec, group: "verification") {
+tasks.register("ktlint", JavaExec) {
+    group = "verification"
     description = "Check Kotlin code style."
     classpath = configurations.ktlint
     main = "com.github.shyiko.ktlint.Main"
@@ -59,7 +60,8 @@ task ktlint(type: JavaExec, group: "verification") {
 }
 check.dependsOn ktlint
 
-task ktlintFormat(type: JavaExec, group: "formatting") {
+tasks.register("ktlintFormat", JavaExec) {
+    group = "formatting"
     description = "Fix Kotlin code style deviations."
     classpath = configurations.ktlint
     main = "com.github.shyiko.ktlint.Main"
