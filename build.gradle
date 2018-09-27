@@ -3,7 +3,7 @@
 buildscript {
     ext.versions = [
       'kotlin': '1.2.71',
-      'androidx': '1.0.0-rc01',
+      'androidx': '1.0.0',
     ]
     repositories {
         google()
