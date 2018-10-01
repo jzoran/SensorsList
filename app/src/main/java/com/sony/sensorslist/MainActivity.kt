@@ -56,8 +56,7 @@ class MainActivity : AppCompatActivity(),
             if (listening) {
                 stopListenerUpdate()
             } else {
-                val id = getChecked()
-                listenUpdate(id)
+                listenUpdate(nav_view.menu.checkedId)
             }
         }
 
@@ -76,7 +75,7 @@ class MainActivity : AppCompatActivity(),
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.run {
-            putInt(MENU_ITEM_CHECKED_ID, getChecked())
+            putInt(MENU_ITEM_CHECKED_ID, nav_view.menu.checkedId)
             putBoolean(LISTENING_SENSOR, listening)
         }
     }
@@ -121,7 +120,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        val indexChecked = getChecked()
+        val indexChecked = nav_view.menu.checkedId
         if (indexChecked != MENU_ITEM_NOT_CHECKED &&
                 sensors.getSensorName(indexChecked) == sensor?.name) {
             val str = sensors.getSensorInfoAsString(indexChecked) +
@@ -137,13 +136,6 @@ class MainActivity : AppCompatActivity(),
         } else {
             sensorValues.text = resources.getString(R.string.values_unavailable)
         }
-    }
-
-    private fun getChecked(): Int {
-        nav_view.menu.forEach {
-            if (it.isChecked) return it.itemId
-        }
-        return MENU_ITEM_NOT_CHECKED
     }
 
     private fun selectMenuItem(itemId: Int) {
@@ -174,3 +166,11 @@ class MainActivity : AppCompatActivity(),
         }
     }
 }
+
+private inline val Menu.checkedId: Int
+        get() {
+            forEach {
+                if (it.isChecked) return it.itemId
+            }
+            return MENU_ITEM_NOT_CHECKED
+        }
