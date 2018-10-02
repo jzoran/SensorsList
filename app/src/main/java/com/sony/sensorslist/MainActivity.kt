@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity(),
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         val indexChecked = nav_view.menu.checkedId
         if (indexChecked != MENU_ITEM_NOT_CHECKED &&
-                sensors.getSensorName(indexChecked) == sensor?.name) {
+                sensors.names[indexChecked] == sensor?.name) {
             val str = sensors.getSensorInfoAsString(indexChecked) +
                     "\n" + resources.getString(R.string.sensor_accuracy).capitalize() +
                     ": ${stringAccuracy(this, accuracy)}"
@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity(),
     private fun selectMenuItem(itemId: Int) {
         nav_view.menu[itemId].isChecked = true
         contentView.text = sensors.getSensorInfoAsString(itemId)
-        title = sensors.getSensorName(itemId)
+        title = sensors.names[itemId]
     }
 
     private fun listenUpdate(id: Int) {

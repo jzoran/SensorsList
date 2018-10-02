@@ -20,8 +20,8 @@ class Sensors(ctx: Context) {
     val names: List<String>
         get() = sensors.map { sensor -> sensor.name }
 
-    fun getSensorName(sel: Int): String = if (sel in 0..sensors.size) sensors[sel].name else ""
-    fun getSensorInfoAsString(sel: Int) = if (sel in 0..sensors.size) sensors[sel].info(context) else ""
+    fun getSensorInfoAsString(sel: Int) =
+            if (sel in 0..sensors.size) sensors[sel].info(context) else ""
 
     fun listen(sel: Int, listener: SensorEventListener) =
             if (sel in 0..sensors.size) {
