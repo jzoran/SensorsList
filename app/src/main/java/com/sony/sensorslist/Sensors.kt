@@ -13,9 +13,9 @@ import androidx.core.text.superscript
 import androidx.core.text.toSpanned
 
 class Sensors(ctx: Context) {
-    private var context = ctx.applicationContext
-    private var manager = context.getSystemService(SensorManager::class.java)
-    private var sensors = manager.getSensorList(Sensor.TYPE_ALL)
+    private val context = ctx.applicationContext
+    private val manager = context.getSystemService(SensorManager::class.java)
+    private val sensors = manager.getSensorList(Sensor.TYPE_ALL)
 
     val names: List<String>
         get() = sensors.map { sensor -> sensor.name }
