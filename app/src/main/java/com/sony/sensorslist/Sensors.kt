@@ -82,6 +82,12 @@ fun Sensor.stringReportingMode(ctx: Context): String {
     else ctx.resources.getString(R.string.not_applicable)
 }
 
+private val THETA: String
+    get() = "\u03B8"
+
+private val MU: String
+    get() = "\u00B5"
+
 fun SensorEvent.stringValues(ctx: Context) =
         if (values == null) {
             ctx.resources.getString(R.string.not_applicable).toSpanned()
@@ -129,18 +135,18 @@ fun SensorEvent.stringValues(ctx: Context) =
             }
             Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR,
             Sensor.TYPE_ROTATION_VECTOR -> {
-                ("x*sin(\u03B8/2):${values[0]}\n" +
-                        "y*sin(\u03B8/2):${values[1]}\n" +
-                        "z*sin(\u03B8/2):${values[2]}\n" +
-                        "cos(\u03B8/2):${values[3]}\n" +
+                ("x*sin($THETA/2):${values[0]}\n" +
+                        "y*sin($THETA/2):${values[1]}\n" +
+                        "z*sin($THETA/2):${values[2]}\n" +
+                        "cos($THETA/2):${values[3]}\n" +
                         ctx.resources.getString(R.string.sensor_accuracy) +
                         ": ${values[4]}rad").toSpanned()
             }
             Sensor.TYPE_GAME_ROTATION_VECTOR -> {
-                ("x*sin(\u03B8/2):${values[0]}\n" +
-                        "y*sin(\u03B8/2):${values[1]}\n" +
-                        "z*sin(\u03B8/2):${values[2]}\n" +
-                        "cos(\u03B8/2):${values[3]}\n").toSpanned()
+                ("x*sin($THETA/2):${values[0]}\n" +
+                        "y*sin($THETA/2):${values[1]}\n" +
+                        "z*sin($THETA/2):${values[2]}\n" +
+                        "cos($THETA/2):${values[3]}\n").toSpanned()
             }
             Sensor.TYPE_GYROSCOPE -> {
                 ("x: ${values[0]}rad/s" +
@@ -175,25 +181,25 @@ fun SensorEvent.stringValues(ctx: Context) =
             }
             Sensor.TYPE_MAGNETIC_FIELD -> {
                 buildSpannedString {
-                    append("x: ${values[0]}\u00B5T")
-                    append("\ny: ${values[1]}\u00B5T")
-                    append("\nz: ${values[2]}\u00B5T")
+                    append("x: ${values[0]}${MU}T")
+                    append("\ny: ${values[1]}${MU}T")
+                    append("\nz: ${values[2]}${MU}T")
                 }
             }
             Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED -> {
                 buildSpannedString {
-                    append("x: ${values[0]}\u00B5T")
-                    append("\ny: ${values[1]}\u00B5T")
-                    append("\nz: ${values[2]}\u00B5T")
+                    append("x: ${values[0]}${MU}T")
+                    append("\ny: ${values[1]}${MU}T")
+                    append("\nz: ${values[2]}${MU}T")
                     append("\nx")
                     subscript { scale(0.75f) { append("b") } }
-                    append(": ${values[3]}\u00B5T")
+                    append(": ${values[3]}${MU}T")
                     append("\ny")
                     subscript { scale(0.75f) { append("b") } }
-                    append(": ${values[4]}\u00B5T")
+                    append(": ${values[4]}${MU}T")
                     append("\nz")
                     subscript { scale(0.75f) { append("b") } }
-                    append(": ${values[5]}\u00B5T")
+                    append(": ${values[5]}${MU}T")
                 }
             }
             Sensor.TYPE_MOTION_DETECT -> {
