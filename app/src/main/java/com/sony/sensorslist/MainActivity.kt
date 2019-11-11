@@ -73,9 +73,9 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState?.run {
+        outState.run {
             putInt(MENU_ITEM_CHECKED_ID, nav_view.menu.checkedId)
             putBoolean(LISTENING_SENSOR, listening)
         }
