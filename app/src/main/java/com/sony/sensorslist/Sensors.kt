@@ -37,10 +37,10 @@ class Sensors(ctx: Context) {
     fun stop(listener: SensorEventListener) = manager?.unregisterListener(listener)
 }
 
-val Sensor.isDeprecated: Boolean
+private val Sensor.isDeprecated: Boolean
     get() = type == Sensor.TYPE_ORIENTATION
 
-fun Sensor.info(ctx: Context) = with(this) {
+private fun Sensor.info(ctx: Context) = with(this) {
         "\n" + ctx.resources.getString(R.string.sensor_name) + ": $name" +
         "\n" + ctx.resources.getString(R.string.sensor_id) + ": $id" +
         "\n" + ctx.resources.getString(R.string.sensor_type_int) + ": $type" +
@@ -76,7 +76,7 @@ fun stringAccuracy(ctx: Context, accuracy: Int): String {
     else ctx.resources.getString(R.string.not_applicable)
 }
 
-fun Sensor.stringReportingMode(ctx: Context): String {
+private fun Sensor.stringReportingMode(ctx: Context): String {
     val reportingModeArray = ctx.resources.getStringArray(R.array.reportingMode)
     return if (reportingMode in 0..reportingModeArray.size) reportingModeArray[reportingMode]
     else ctx.resources.getString(R.string.not_applicable)
