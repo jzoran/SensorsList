@@ -1,5 +1,6 @@
 package com.sony.sensorslist
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -121,6 +122,12 @@ class MainActivity : AppCompatActivity(),
         return true
     }
 
+    @SuppressLint("DefaultLocale")
+    // For the locales this app is using currently, capitalize()
+    // will work just fine, and lint warning is just annoying, so
+    // suppress it for now.
+    // Should that change, use capitalize(Locale) API, which is
+    // currently @ExperimentalStdlibApi, so bear that in mind.
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         val indexChecked = nav_view.menu.checkedId
         if (indexChecked != Sensors.ITEM_NOT_CHECKED &&
