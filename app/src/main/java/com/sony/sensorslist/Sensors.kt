@@ -5,7 +5,6 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-
 import androidx.core.text.buildSpannedString
 import androidx.core.text.scale
 import androidx.core.text.subscript
