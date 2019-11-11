@@ -24,7 +24,7 @@ class Sensors(ctx: Context) {
             else -> sensors.map { sensor -> sensor.name }
         }
 
-    fun getSensorInfoAsString(sel: Int) = when {
+    val sensorInfoToString(sel: Int) = when {
             sensors == null || sel !in 0..sensors.size -> ""
             else -> sensors[sel].info(context)
         }
@@ -35,6 +35,12 @@ class Sensors(ctx: Context) {
     }
 
     fun stop(listener: SensorEventListener) = manager?.unregisterListener(listener)
+}
+
+fun accuracyToString(ctx: Context, accuracy: Int): String {
+    val accuracyArray = ctx.resources.getStringArray(R.array.accuracy)
+    return if (accuracy in 0..accuracyArray.size) accuracyArray[accuracy]
+    else ctx.resources.getString(R.string.not_applicable)
 }
 
 private val Sensor.isDeprecated: Boolean
@@ -48,7 +54,7 @@ private fun Sensor.info(ctx: Context) = with(this) {
         "\n" + ctx.resources.getString(R.string.sensor_vendor) + ": $vendor" +
         "\n" + ctx.resources.getString(R.string.sensor_version) + ": $version" +
         "\n" + ctx.resources.getString(R.string.sensor_resolution) + ": $resolution" +
-        "\n" + ctx.resources.getString(R.string.sensor_reporting_mode) + ": ${stringReportingMode(ctx)}" +
+        "\n" + ctx.resources.getString(R.string.sensor_reporting_mode) + ": ${reportingModeToString(ctx)}" +
         "\n" + ctx.resources.getString(R.string.sensor_power) + ": ${power}mAh" +
         "\n" + ctx.resources.getString(R.string.sensor_range) + ": $maximumRange" +
         "\n" + ctx.resources.getString(R.string.sensor_delay_min) + ": $minDelay" +
@@ -70,13 +76,7 @@ private fun Sensor.info(ctx: Context) = with(this) {
                 }
     }
 
-fun stringAccuracy(ctx: Context, accuracy: Int): String {
-    val accuracyArray = ctx.resources.getStringArray(R.array.accuracy)
-    return if (accuracy in 0..accuracyArray.size) accuracyArray[accuracy]
-    else ctx.resources.getString(R.string.not_applicable)
-}
-
-private fun Sensor.stringReportingMode(ctx: Context): String {
+private fun Sensor.reportingModeToString(ctx: Context): String {
     val reportingModeArray = ctx.resources.getStringArray(R.array.reportingMode)
     return if (reportingMode in 0..reportingModeArray.size) reportingModeArray[reportingMode]
     else ctx.resources.getString(R.string.not_applicable)
@@ -88,7 +88,7 @@ private val THETA: String
 private val MU: String
     get() = "\u00B5"
 
-fun SensorEvent.stringValues(ctx: Context) =
+fun SensorEvent.valuesToString(ctx: Context) =
         if (values == null) {
             ctx.resources.getString(R.string.not_applicable).toSpanned()
         } else when (sensor.type) {

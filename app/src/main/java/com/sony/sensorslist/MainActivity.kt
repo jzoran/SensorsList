@@ -127,16 +127,16 @@ class MainActivity : AppCompatActivity(),
         val indexChecked = nav_view.menu.checkedId
         if (indexChecked != MENU_ITEM_NOT_CHECKED &&
                 sensors.names[indexChecked] == sensor?.name) {
-            val str = sensors.getSensorInfoAsString(indexChecked) +
+            val str = sensors.sensorInfoToString(indexChecked) +
                     "\n" + resources.getString(R.string.sensor_accuracy).capitalize() +
-                    ": ${stringAccuracy(this, accuracy)}"
+                    ": ${accuracyToString(this, accuracy)}"
             contentView.text = str
         }
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null) {
-            sensorValues.text = event.stringValues(this)
+            sensorValues.text = event.valuesToString(this)
         } else {
             sensorValues.text = resources.getString(R.string.values_unavailable)
         }
@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity(),
 
     private fun selectMenuItem(itemId: Int) {
         nav_view.menu[itemId].isChecked = true
-        contentView.text = sensors.getSensorInfoAsString(itemId)
+        contentView.text = sensors.sensorInfoToString(itemId)
         title = sensors.names[itemId]
     }
 
