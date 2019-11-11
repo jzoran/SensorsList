@@ -13,6 +13,7 @@ import androidx.core.text.toSpanned
 import java.util.Collections
 
 class Sensors(ctx: Context) {
+
     private val context = ctx.applicationContext
     private val manager = ctx.getSystemService(SensorManager::class.java)
     private val sensors = manager?.getSensorList(Sensor.TYPE_ALL)
