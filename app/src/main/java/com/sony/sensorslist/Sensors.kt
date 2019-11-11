@@ -11,25 +11,30 @@ import androidx.core.text.scale
 import androidx.core.text.subscript
 import androidx.core.text.superscript
 import androidx.core.text.toSpanned
+import java.util.Collections
 
 class Sensors(ctx: Context) {
     private val context = ctx.applicationContext
-    private val manager = context.getSystemService(SensorManager::class.java)
-    private val sensors = manager.getSensorList(Sensor.TYPE_ALL)
+    private val manager = ctx.getSystemService(SensorManager::class.java)
+    private val sensors = manager?.getSensorList(Sensor.TYPE_ALL)
 
     val names: List<String>
-        get() = sensors.map { sensor -> sensor.name }
+        get() = when (sensors) {
+            null -> Collections.emptyList()
+            else -> sensors.map { sensor -> sensor.name }
+        }
 
-    fun getSensorInfoAsString(sel: Int) =
-            if (sel in 0..sensors.size) sensors[sel].info(context) else ""
+    fun getSensorInfoAsString(sel: Int) = when {
+            sensors == null || sel !in 0..sensors.size -> ""
+            else -> sensors[sel].info(context)
+        }
 
-    fun listen(sel: Int, listener: SensorEventListener) =
-            if (sel in 0..sensors.size) {
-                manager.registerListener(listener, sensors[sel], SensorManager.SENSOR_DELAY_UI)
-            } else {
-                false
-            }
-    fun stop(listener: SensorEventListener) = manager.unregisterListener(listener)
+    fun listen(sel: Int, listener: SensorEventListener) = when {
+        manager == null || sensors == null || sel !in 0..sensors.size -> false
+        else -> manager.registerListener(listener, sensors[sel], SensorManager.SENSOR_DELAY_UI)
+    }
+
+    fun stop(listener: SensorEventListener) = manager?.unregisterListener(listener)
 }
 
 val Sensor.isDeprecated: Boolean
