@@ -23,6 +23,7 @@ class Sensors(ctx: Context) {
     private val sensors = manager?.getSensorList(Sensor.TYPE_ALL)
 
     var indexChecked = ITEM_NOT_CHECKED
+    var listening = false
 
     val names: List<String>
         get() = when (sensors) {
@@ -36,12 +37,18 @@ class Sensors(ctx: Context) {
             else -> sensors[indexChecked].info(context)
         }
 
-    fun listen(listener: SensorEventListener) = when {
-        manager == null || sensors == null || indexChecked !in 0..sensors.size -> false
-        else -> manager.registerListener(listener, sensors[indexChecked], SensorManager.SENSOR_DELAY_UI)
+    fun listen(listener: SensorEventListener): Boolean {
+        listening = when {
+            manager == null || sensors == null || indexChecked !in 0..sensors.size -> false
+            else -> manager.registerListener(listener, sensors[indexChecked], SensorManager.SENSOR_DELAY_UI)
+        }
+        return listening
     }
 
-    fun stop(listener: SensorEventListener) = manager?.unregisterListener(listener)
+    fun stop(listener: SensorEventListener) {
+            manager?.unregisterListener(listener)
+            listening = false
+        }
 }
 
 fun accuracyToString(ctx: Context, accuracy: Int): String {

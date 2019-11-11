@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity(),
         SensorEventListener {
 
     private lateinit var sensors: Sensors
-    private var listening: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +50,7 @@ class MainActivity : AppCompatActivity(),
         nav_view.setNavigationItemSelectedListener(this)
 
         fab.setOnClickListener {
-            if (listening) {
+            if (sensors.listening) {
                 stopListenerUpdate()
             } else {
                 listenUpdate(nav_view.menu.checkedId)
@@ -59,11 +58,11 @@ class MainActivity : AppCompatActivity(),
         }
 
         if (savedInstanceState != null) {
-            listening = savedInstanceState.getBoolean(LISTENING_SENSOR)
+            sensors.listening = savedInstanceState.getBoolean(LISTENING_SENSOR)
             val itemId = savedInstanceState.getInt(MENU_ITEM_CHECKED_ID)
             if (itemId != Sensors.ITEM_NOT_CHECKED) {
                 selectMenuItem(itemId)
-                if (listening) {
+                if (sensors.listening) {
                     listenUpdate(itemId)
                 }
             }
@@ -74,7 +73,7 @@ class MainActivity : AppCompatActivity(),
         super.onSaveInstanceState(outState)
         outState.run {
             putInt(MENU_ITEM_CHECKED_ID, nav_view.menu.checkedId)
-            putBoolean(LISTENING_SENSOR, listening)
+            putBoolean(LISTENING_SENSOR, sensors.listening)
         }
     }
 
@@ -110,7 +109,7 @@ class MainActivity : AppCompatActivity(),
         }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        if (listening) {
+        if (sensors.listening) {
             stopListenerUpdate()
         }
         sensorValues.text = resources.getText(R.string.values_default)
@@ -155,7 +154,6 @@ class MainActivity : AppCompatActivity(),
         sensors.stop(this)
         sensors.indexChecked = id
         sensors.listen(this)
-        listening = true
         fab.run {
             setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_on, null))
             backgroundTintList = resources.getColorStateList(R.color.colorAccent, null)
@@ -164,7 +162,6 @@ class MainActivity : AppCompatActivity(),
 
     private fun stopListenerUpdate() {
         sensors.stop(this)
-        listening = false
         sensorValues.text = resources.getText(R.string.values_default)
         fab.run {
             setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_off, null))
