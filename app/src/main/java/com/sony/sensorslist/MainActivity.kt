@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-private const val MENU_ITEM_NOT_CHECKED: Int = -1
 private const val MENU_ITEM_CHECKED_ID = "itemId"
 private const val LISTENING_SENSOR = "listening"
 
@@ -62,7 +61,7 @@ class MainActivity : AppCompatActivity(),
         if (savedInstanceState != null) {
             listening = savedInstanceState.getBoolean(LISTENING_SENSOR)
             val itemId = savedInstanceState.getInt(MENU_ITEM_CHECKED_ID)
-            if (itemId != MENU_ITEM_NOT_CHECKED) {
+            if (itemId != Sensors.ITEM_NOT_CHECKED) {
                 selectMenuItem(itemId)
                 if (listening) {
                     listenUpdate(itemId)
@@ -125,9 +124,10 @@ class MainActivity : AppCompatActivity(),
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         val indexChecked = nav_view.menu.checkedId
-        if (indexChecked != MENU_ITEM_NOT_CHECKED &&
+        if (indexChecked != Sensors.ITEM_NOT_CHECKED &&
                 sensors.names[indexChecked] == sensor?.name) {
-            val str = sensors.sensorInfoToString(indexChecked) +
+            sensors.indexChecked = indexChecked
+            val str = sensors.sensorInfoToString +
                     "\n" + resources.getString(R.string.sensor_accuracy).capitalize() +
                     ": ${accuracyToString(this, accuracy)}"
             contentView.text = str
@@ -144,15 +144,17 @@ class MainActivity : AppCompatActivity(),
 
     private fun selectMenuItem(itemId: Int) {
         nav_view.menu[itemId].isChecked = true
-        contentView.text = sensors.sensorInfoToString(itemId)
+        sensors.indexChecked = itemId
+        contentView.text = sensors.sensorInfoToString
         title = sensors.names[itemId]
     }
 
     private fun listenUpdate(id: Int) {
-        if (id == MENU_ITEM_NOT_CHECKED) return
+        if (id == Sensors.ITEM_NOT_CHECKED) return
 
         sensors.stop(this)
-        sensors.listen(id, this)
+        sensors.indexChecked = id
+        sensors.listen(this)
         listening = true
         fab.run {
             setImageDrawable(resources.getDrawable(android.R.drawable.button_onoff_indicator_on, null))
@@ -176,5 +178,5 @@ private inline val Menu.checkedId: Int
             forEach {
                 if (it.isChecked) return it.itemId
             }
-            return MENU_ITEM_NOT_CHECKED
+            return Sensors.ITEM_NOT_CHECKED
         }

@@ -14,9 +14,15 @@ import java.util.Collections
 
 class Sensors(ctx: Context) {
 
+    companion object {
+        const val ITEM_NOT_CHECKED = -1
+    }
+
     private val context = ctx.applicationContext
     private val manager = ctx.getSystemService(SensorManager::class.java)
     private val sensors = manager?.getSensorList(Sensor.TYPE_ALL)
+
+    var indexChecked = ITEM_NOT_CHECKED
 
     val names: List<String>
         get() = when (sensors) {
@@ -24,14 +30,15 @@ class Sensors(ctx: Context) {
             else -> sensors.map { sensor -> sensor.name }
         }
 
-    val sensorInfoToString(sel: Int) = when {
-            sensors == null || sel !in 0..sensors.size -> ""
-            else -> sensors[sel].info(context)
+    val sensorInfoToString: String
+        get() = when {
+            sensors == null || indexChecked !in 0..sensors.size -> ""
+            else -> sensors[indexChecked].info(context)
         }
 
-    fun listen(sel: Int, listener: SensorEventListener) = when {
-        manager == null || sensors == null || sel !in 0..sensors.size -> false
-        else -> manager.registerListener(listener, sensors[sel], SensorManager.SENSOR_DELAY_UI)
+    fun listen(listener: SensorEventListener) = when {
+        manager == null || sensors == null || indexChecked !in 0..sensors.size -> false
+        else -> manager.registerListener(listener, sensors[indexChecked], SensorManager.SENSOR_DELAY_UI)
     }
 
     fun stop(listener: SensorEventListener) = manager?.unregisterListener(listener)
